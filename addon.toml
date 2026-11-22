@@ -1,0 +1,12 @@
+# The Borders add-on's manifest. Each release on this repository (made by
+# .github/workflows/release.yml) carries borders-<os>-<arch>.zip holding this file, the
+# program, README.md and LICENSE; Gadgets > Add-ons installs it per user into
+# <add-ons folder>/borders/. Cut Craft's Generate Border form runs the program.
+id = "borders"
+name = "Borders (Generate Border)"
+kind = "tool"
+version = "0.1.0"
+needs_cutcraft = ">=0.7.4"
+platforms = ["windows-x64", "linux-x64", "macos-arm64"]
+license = "LicenseRef-CutCraft"
+program = "cutcraft-borders"
