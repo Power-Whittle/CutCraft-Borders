@@ -1,10 +1,10 @@
 # Checks every push, and publishes a release when a v* tag is pushed (or "Run workflow"):
 #   borders-linux-x86_64.zip, borders-windows-x86_64.zip   addon.toml, the program, README, LICENSE
 #   borders-macos-aarch64.zip, borders-macos-x86_64.zip    Apple Silicon and Intel Macs
-# Each file signed with Cut Craft's release key (FILE.minisig beside it), so Gadgets >
-# Add-ons installs it as official. Needs the secrets MINISIGN_SECRET_KEY and
-# MINISIGN_PASSWORD (the same key as Cut Craft's own releases). No Google key is ever
-# needed here: each person types their own into Cut Craft.
+# Published unsigned: Cut Craft's "Sign add-ons" workflow (NoobyNull/Cut-Craft,
+# .github/workflows/sign-addons.yml) signs each file with Cut Craft's release key within the
+# hour, so Gadgets > Add-ons installs it as official. This repository holds no key, and no
+# Google key is ever needed here: each person types their own into Cut Craft.
 name: Borders add-on
 
 on:
@@ -106,12 +106,6 @@ jobs:
         with:
           path: out
           merge-multiple: true
-      - name: Sign
-        env:
-          MINISIGN_SECRET_KEY: ${{ secrets.MINISIGN_SECRET_KEY }}
-          MINISIGN_PASSWORD: ${{ secrets.MINISIGN_PASSWORD }}
-          REQUIRE_SIGNING: '1'
-        run: scripts/sign-release out
       - name: Publish
         env:
           GH_TOKEN: ${{ github.token }}
@@ -119,9 +113,13 @@ jobs:
           version=$(sed -n 's/^version = "\(.*\)"/\1/p' addon.toml)
           if gh release view "v$version" >/dev/null 2>&1; then
             gh release upload "v$version" out/* --clobber
+            # a file replaced loses its old signature, so Sign add-ons signs the new one
+            for f in out/*; do
+              gh release delete-asset "v$version" "$(basename "$f").minisig" --yes 2>/dev/null || true
+            done
           else
             gh release create "v$version" out/* --title "Borders add-on $version" \
-              --notes "Generates repeating picture-frame borders for Cut Craft's Generate Border tool. Install it from Cut Craft: Gadgets > Add-ons."
+              --notes "Generates repeating picture-frame borders for Cut Craft's Generate Border tool. Install it from Cut Craft: Gadgets > Add-ons. Signed by Cut Craft within the hour of publishing."
           fi
       - name: Say when the Mac zip is missing
         if: needs.build-macos.result != 'success'
