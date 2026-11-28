@@ -1,4 +1,4 @@
-//! `cutcraft-borders`: Cut Craft runs it behind its Generate Border form.
+//! `cutcraft-borders`: PowerWhittle runs it behind its Generate Border form.
 //!
 //! ```text
 //! cutcraft-borders picture STYLE RATIO DETAILS OUT   one repeat of a moulding, as a picture

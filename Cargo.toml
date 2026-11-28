@@ -1,6 +1,6 @@
 [package]
 name = "cutcraft-borders"
-description = "Borders add-on for Cut Craft: asks Google's image model for a repeating length of moulding and then its depth map. Cut Craft runs it behind its Generate Border form"
+description = "Borders add-on for PowerWhittle: asks Google's image model for a repeating length of moulding and then its depth map. PowerWhittle runs it behind its Generate Border form"
 version = "0.1.0"
 edition = "2024"
 license-file = "LICENSE"
