@@ -20,7 +20,7 @@ pub const MODEL: &str = "gemini-3.1-flash-image";
 /// One of the styles, and how it is described to the model.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct Style {
-    /// Its id, as Cut Craft's form sends it.
+    /// Its id, as PowerWhittle's form sends it.
     pub id: &'static str,
     pub name: &'static str,
     /// The moulding, as the model is told it.

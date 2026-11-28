@@ -1,10 +1,10 @@
 # Checks every push, and publishes a release when a v* tag is pushed (or "Run workflow"):
 #   borders-linux-x86_64.zip, borders-windows-x86_64.zip   addon.toml, the program, README, LICENSE
 #   borders-macos-aarch64.zip, borders-macos-x86_64.zip    Apple Silicon and Intel Macs
-# Published unsigned: Cut Craft's "Sign add-ons" workflow (NoobyNull/Cut-Craft,
-# .github/workflows/sign-addons.yml) signs each file with Cut Craft's release key within the
+# Published unsigned: PowerWhittle's "Sign add-ons" workflow (Power-Whittle/PowerWhittle,
+# .github/workflows/sign-addons.yml) signs each file with PowerWhittle's release key within the
 # hour, so Gadgets > Add-ons installs it as official. This repository holds no key, and no
-# Google key is ever needed here: each person types their own into Cut Craft.
+# Google key is ever needed here: each person types their own into PowerWhittle.
 name: Borders add-on
 
 on:
@@ -119,7 +119,7 @@ jobs:
             done
           else
             gh release create "v$version" out/* --title "Borders add-on $version" \
-              --notes "Generates repeating picture-frame borders for Cut Craft's Generate Border tool. Install it from Cut Craft: Gadgets > Add-ons. Signed by Cut Craft within the hour of publishing."
+              --notes "Generates repeating picture-frame borders for PowerWhittle's Generate Border tool. Install it from PowerWhittle: Gadgets > Add-ons. Signed by PowerWhittle within the hour of publishing."
           fi
       - name: Say when the Mac zip is missing
         if: needs.build-macos.result != 'success'
